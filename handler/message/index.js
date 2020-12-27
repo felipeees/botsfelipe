@@ -312,7 +312,10 @@ module.exports = msgHandler = async (client, message) => {
             * This is Premium feature.
             * Check premium feature at https://trakteer.id/red-emperor/showcase or chat Author for Information.
             */
-            client.reply(from, 'OBRIGADO', id)
+            if (!isGroupMsg) return client.reply(from, 'Falha, este comando só pode ser usado por administradores de grupo! [Grupo de administração apenas]', id)
+            if (!isGroupAdmins) return client.reply(from, 'O Bot tem que esta como admin do grupo', id)
+            const mentions = mentionList(sender.id, botNumber, groupMembers)
+            await client.sendTextWithMentions(from, `Heyy, ${pushname} is calling you !!!\n${mentions}`)
             break
         case 'botstat': {
             const loadedMsg = await client.getAmountOfLoadedMessages()
